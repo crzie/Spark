@@ -103,8 +103,15 @@ const CreateEventPage = () => {
                     <Title level={1}>Create Event</Title>
                     <div className="flex flex-col gap-3">
                         <div className="w-full bg-emerald-100 rounded-2xl border-dashed border-2 border-emerald-800 flex items-baseline">
-                            {banner ? (
-                                <img
+                            <label
+                                className="b-1 rounded-1 text-2xl w-full cursor-pointer flex flex-col items-center justify-center clickable"
+                                style={{
+                                    objectFit: "cover",
+                                    objectPosition: "50% 50%",
+                                    aspectRatio: "16/4",
+                                }}
+                            >
+                                {banner ? <img
                                     src={URL.createObjectURL(banner)}
                                     className="w-full rounded-2xl"
                                     style={{
@@ -112,29 +119,22 @@ const CreateEventPage = () => {
                                         objectPosition: "50% 50%",
                                         aspectRatio: "16/4",
                                     }}
-                                />
-                            ) : (
-                                <label
-                                    className="b-1 rounded-1 text-2xl w-full h-full flex flex-col items-center justify-center clickable"
-                                    style={{
-                                        objectFit: "cover",
-                                        objectPosition: "50% 50%",
-                                        aspectRatio: "16/4",
+                                /> :
+                                    <>
+                                        <BsCamera className="w-24 h-24" />
+                                        <p>Upload Banner</p>
+                                    </>
+                                }
+                                <input
+                                    type="file"
+                                    style={{ display: "none" }}
+                                    onChange={(e) => {
+                                        if (e.target.files) {
+                                            setBanner(e.target.files[0]);
+                                        }
                                     }}
-                                >
-                                    <BsCamera className="w-24 h-24" />
-                                    <p>Upload Banner</p>
-                                    <input
-                                        type="file"
-                                        style={{ display: "none" }}
-                                        onChange={(e) => {
-                                            if (e.target.files) {
-                                                setBanner(e.target.files[0]);
-                                            }
-                                        }}
-                                    />
-                                </label>
-                            )}
+                                />
+                            </label>
                         </div>
                         <div className="w-3/5 flex flex-col items-baseline">
                             <Title level={5}>Event Name</Title>
