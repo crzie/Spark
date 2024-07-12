@@ -51,15 +51,80 @@ const HomePage = () => {
         });
         initializeProgress();
     }, []);
+    
 
     const data: InputData[] = [
         {
-            "2024-01-01": { level: 2, data: { Davis: "ikan" } },
+            "2024-01-01": { level: 2, data: { myData: "Davis" } },
         },
         {
-            "2023-07-09": { level: 1, data: {} },
+            "2024-07-01": { level: 1, data: { myData: "You gain 100Xp" } },
+        },
+        {
+            "2024-07-05": { level: 3, data: { myData: "Event A" } },
+        },
+        {
+            "2024-07-10": { level: 4, data: { myData: "Event B" } },
+        },
+        {
+            "2024-07-15": { level: 2, data: { myData: "Volunteer Work" } },
+        },
+        {
+            "2024-02-20": { level: 3, data: { myData: "Project X" } },
+        },
+        {
+            "2024-03-12": { level: 1, data: { myData: "Presentation" } },
+        },
+        {
+            "2024-04-25": { level: 2, data: { myData: "Workshop" } },
+        },
+        {
+            "2024-05-08": { level: 4, data: { myData: "Holiday" } },
+        },
+        {
+            "2024-06-30": { level: 4, data: { myData: "Seminar" } },
+        },
+        {
+            "2023-07-12": { level: 2, data: { myData: "Project A" } },
+        },
+        {
+            "2023-08-05": { level: 1, data: { myData: "Event X" } },
+        },
+        {
+            "2023-09-20": { level: 3, data: { myData: "Workshop B" } },
+        },
+        {
+            "2023-10-15": { level: 4, data: { myData: "Seminar C" } },
+        },
+        {
+            "2023-11-07": { level: 2, data: { myData: "Hackathon D" } },
+        },
+        {
+            "2023-12-25": { level: 1, data: { myData: "Holiday Event" } },
+        },
+        {
+            "2024-01-08": { level: 3, data: { myData: "Training Session" } },
+        },
+        {
+            "2024-02-14": { level: 2, data: { myData: "Project Launch" } },
+        },
+        {
+            "2024-03-30": { level: 1, data: { myData: "Charity Drive" } },
+        },
+        {
+            "2024-04-22": { level: 4, data: { myData: "Conference" } },
+        },
+        {
+            "2024-05-19": { level: 1, data: { myData: "Event Y" } },
+        },
+        {
+            "2024-06-10": { level: 2, data: { myData: "Volunteer Work" } },
+        },
+        {
+            "2024-07-04": { level: 3, data: { myData: "Meeting" } },
         },
     ];
+    
 
     if (!details) {
         data.splice(0, data.length);
