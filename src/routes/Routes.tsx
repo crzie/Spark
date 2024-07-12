@@ -3,6 +3,10 @@ import App from "../App";
 import SignIn from "../pages/auth/SignIn";
 import SignUp from "../pages/auth/SignUp";
 import MainLayout from "../layouts/MainLayout";
+import HomePage from "../pages/app/HomePage";
+import LeaderboardPage from "../pages/app/LeaderboardPage";
+import ProfilePage from "../pages/app/ProfilePage";
+import RedeemPage from "../pages/app/RedeemPage";
 
 export const router = createBrowserRouter([
   {
@@ -15,10 +19,10 @@ export const router = createBrowserRouter([
         path: "/",
         element: <MainLayout />,
         children: [
-          { path: "/", element: <></> },
-          { path: "/leaderboard", element: <></> },
-          { path: "/profile", element: <></> },
-          { path: "/redeem", element: <></> },
+          { path: "/", element: <HomePage /> },
+          { path: "/leaderboard", element: <LeaderboardPage /> },
+          { path: "/profile", element: <ProfilePage /> },
+          { path: "/redeem", element: <RedeemPage /> },
         ],
       },
     ],
