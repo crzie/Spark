@@ -1,12 +1,12 @@
-// import { Image } from "antd";
-// import { useState } from "react";
+import { Image } from "antd";
+import { useState } from "react";
 
 // type User = {
 //   name: string,
 //   exp: number
 // }
 
-// const LeaderboardPage = () => {
+const LeaderboardPage = () => {
 //   const [topUsers, setTopUsers] = useState<User[]>([
 //     {
 //       name: "tio",
@@ -40,6 +40,6 @@
 //       {/* <Image src="" /> */}
 //     </div>
 //   )
-// };
+};
 
-// export default LeaderboardPage;
+export default LeaderboardPage;
