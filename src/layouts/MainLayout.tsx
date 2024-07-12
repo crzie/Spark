@@ -15,9 +15,9 @@ const MainLayout = () => {
           <Topbar />
         </Header>
         <Content className="bg-white h-full">
-       
-            <Outlet />
-         
+
+          <Outlet />
+
         </Content>
         <Footer style={{ textAlign: 'center' }} className="bg-emerald-200">©2024 Your Company</Footer>
       </Layout>
