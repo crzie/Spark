@@ -8,4 +8,5 @@ type Event = {
     location: string;
     eventStart: Date;
     eventEnd: Date;
+    verified: boolean;
 }

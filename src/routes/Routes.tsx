@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import App from "../App";
 import SignIn from "../pages/auth/SignIn";
 import SignUp from "../pages/auth/SignUp";
@@ -8,6 +8,7 @@ import LeaderboardPage from "../pages/app/LeaderboardPage";
 import ProfilePage from "../pages/app/ProfilePage";
 import RedeemPage from "../pages/app/RedeemPage";
 import Auth from "../context/Auth";
+import CreateEventPage from "../pages/app/CreateEventPage";
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +25,8 @@ export const router = createBrowserRouter([
           { path: "/leaderboard", element: <LeaderboardPage /> },
           { path: "/profile", element: <ProfilePage /> },
           { path: "/redeem", element: <RedeemPage /> },
+          { path: "/create", element: <CreateEventPage /> },
+          { path: "*", element: <Navigate to="/" /> },
         ],
       },
     ],
