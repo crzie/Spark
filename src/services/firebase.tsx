@@ -1,7 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
-import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getDocs, getFirestore, query, setDoc, where } from "firebase/firestore";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -45,10 +46,50 @@ export const getAccountDetails = async (userId: string) => {
     return null;
 }
 
+export const getAllEvents = async () => {
+    const q = query(collection(db, 'events'), where('verified', '==', true))
+    const result = await getDocs(q)
+
+    const events: FirebaseDocument<EventData>[] = [];
+    result.forEach((doc) => {
+        const data = doc.data();
+        events.push({ data: data as EventData, id: doc.id })
+    })
+
+    return events
+}
+
 export const createEvent = async (event: Event) => {
+    return addDoc(collection(db, "events"), event)
+}
+
+export const participateEvent = async (eventId: string) => {
+    const docRef = doc(db, "events", eventId)
+    const docSnap = await getDoc(docRef)
+
+    if (docSnap.exists() && auth.currentUser) {
+        const event = docSnap.data() as EventData;
+        event.participantIds.push(auth.currentUser.uid);
+
+        setDoc(docRef, event);
+    }
+}
+
+export const getAllUnverifiedEvents = async () => {
+    const q = query(collection(db, 'events'), where('verified', '==', false))
+    const result = await getDocs(q)
+
+    const events: FirebaseDocument<EventData>[] = [];
+    result.forEach((doc) => {
+        const data = doc.data();
+        events.push({ data: data as EventData, id: doc.id })
+    })
+
+    return events
+}
+
+export const updateProfileImage = async (file: File) => {
 
 }
 
-export const participateEvent = async (eventId: string, userId: string) => {
 
-}

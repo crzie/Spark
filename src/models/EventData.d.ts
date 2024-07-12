@@ -1,4 +1,4 @@
-type Event = {
+type EventData = {
     name: string;
     description: string;
     bannerPath: string;
@@ -9,4 +9,5 @@ type Event = {
     eventStart: Date;
     eventEnd: Date;
     verified: boolean;
+    confirmed: boolean;
 }
