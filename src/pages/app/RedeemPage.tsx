@@ -110,7 +110,7 @@ const RedeemPage = () => {
       <Title level={3} className="text-center">
         My Points: 808008080
       </Title>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mx-32 my-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mx-32 my-10">
         {charityData.map((charity, index) => (
           <CharityCard key={index} {...charity} />
         ))}
