@@ -1,5 +1,5 @@
 import Button from "antd/es/button";
-import xpIcon from "../assets/XPIcon.png";
+import coin from "../assets/moving-coin-icon.gif"
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 const Topbar = () => {
@@ -7,27 +7,27 @@ const Topbar = () => {
   const { user, details } = useAuth();
 
   return (
-    <>
-      <div className="flex h-20 items-center text-lg justify-end w-full lg:gap-7 gap-2 lg:pr-5  pr-1 font-nunito font-bold text-emerald-800">
-        <span>
+    <div className="w-full overflow-visible">
+      <div className="pt-4 h-screen flex font-nunito items-start font-bold text-emerald-800">
+        <span className="ml-auto gap-4 p-2 bg-emerald-900/80 rounded-xl overflow-auto text-lg items-center flex sticky h-12 top-4 z-30 ">
           <div className="flex items-center gap-2 z-20">
-          <div>
-            <img src={xpIcon} alt="" className="w-10 h-10" />
+            <div>
+              <img src={coin} alt="" className="w-8 h-8" />
+            </div>
+            <div className="text-white">{details?.coin ?? "-"}</div>
           </div>
-          <div className="text-white">{details?.xp ?? "-"}</div>
-        </div>
-        <div className="z-20 text-white">Hi, {details?.username ?? "guest"}</div>
-        <div>
-          <Button
-            className="font-bold text-emerald-800"
-            onClick={() => navigate("/signin")}
-          >
-            {user ? "Logout" : "Login"}
-          </Button>
-        </div>
+          <div className="z-20 text-white">Hi, {details?.username ?? "guest"}</div>
+          <div>
+            <Button
+              className="font-bold text-emerald-800"
+              onClick={() => navigate("/signin")}
+            >
+              {user ? "Logout" : "Login"}
+            </Button>
+          </div>
         </span>
       </div>
-    </>
+    </div>
   );
 };
 
