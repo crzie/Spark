@@ -20,7 +20,7 @@ const LeftSidebar = () => {
     link: string;
   }) => {
     console.log(location.pathname, link);
-    const active = location.pathname.startsWith(link)
+    const active = location.pathname === link
       ? " bg-gray-100 border-2 border-emerald-500"
       : "";
     return (
