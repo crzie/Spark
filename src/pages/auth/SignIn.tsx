@@ -1,27 +1,29 @@
 import { Button, Input, Typography } from "antd";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import logo from "../../assets/SparkLogoTextUnder.png";
-import { auth } from "../../services/firebase";
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useState } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
+import logo from '../../assets/SparkLogoTextUnder.png';
+import { auth } from '../../services/firebase';
+import { useAuth } from "../../hooks/useAuth";
 const { Title } = Typography;
 
 const SignIn = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
+    const { user } = useAuth();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
 
-  const handleSubmit = (event: { preventDefault: () => void }) => {
-    event.preventDefault();
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        navigate("/");
-      })
-      .catch((error) => {
-        setError(error.message);
-      });
-  };
+    const handleSubmit = (event: { preventDefault: () => void; }) => {
+        event.preventDefault();
+        signInWithEmailAndPassword(auth, email, password)
+            .then(() => {
+                navigate('/');
+            })
+            .catch((error) => {
+                setError(error.message);
+            })
+    }
 
   return (
     <div className="w-screen h-screen flex justify-center items-center bg-green-white ">

@@ -1,7 +1,13 @@
 
+const AvailableCharityEvents: Charity[] = [
+
+]
+
 const RedeemPage = () => {
     return (
-        <div>RedeemPage</div>
+        <div>
+            RedeemPage
+        </div>
     )
 }
 

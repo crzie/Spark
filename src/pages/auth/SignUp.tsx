@@ -1,10 +1,12 @@
 import { Button, Input, Typography } from "antd";
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import logo from '../../assets/SparkLogoTextUnder.png';
 import { createAccount } from '../../services/firebase';
+import { useAuth } from "../../hooks/useAuth";
 const { Title } = Typography;
 const SignUp = () => {
+    const { user } = useAuth();
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -27,6 +29,10 @@ const SignUp = () => {
             })
     }
 
+    if (user) {
+        return <Navigate to={"/"}></Navigate>
+    }
+
     return (
         <div className='w-screen h-screen flex justify-center items-center bg-green-white '>
             <div className='w-3/4 h-3/4 bg-red-500 flex items-center justify-between rounded-2xl' style={{ backgroundColor: '#A1DEBB' }}>
@@ -35,7 +41,7 @@ const SignUp = () => {
                 </div>
                 <form className='w-1/2 h-full bg-white flex flex-col justify-center' onSubmit={handleSubmit}>
                     <h1 className='pb-5 w-full flex flex-col items-center text-5xl font-normal'>Register</h1>
-                    <div className='flex flex-col items-center '>
+                    <div className='flex flex-col items-center'>
                         <div className='w-3/5 flex flex-col items-baseline'>
                             <Title level={5} >Username</Title>
                             <Input placeholder="Choose a username" className='border-black'
@@ -56,6 +62,7 @@ const SignUp = () => {
                             <Input.Password placeholder="Re-enter your password" type='password' className='border-black '
                                 onChange={(e) => { setConfirmPassword(e.target.value) }} />
                         </div>
+                        {error && <p className="my-2 text-red-500">{error}</p>}
                         <div className='w-3/5 flex flex-col items-center gap-4 pt-10'>
                             <Button type="primary" className='w-1/2' htmlType="submit" style={{ backgroundColor: '#0B6A3C' }}>Register</Button>
                             <Title level={5} >Already Have an Account? <a href="/signin">Login</a></Title>
