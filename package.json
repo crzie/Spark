@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "antd": "^5.19.1",
+    "antd-img-crop": "^4.22.0",
     "firebase": "^10.12.3",
     "react": "^18.3.1",
     "react-contribution-calendar": "^1.5.0",
