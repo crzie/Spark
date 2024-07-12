@@ -80,6 +80,18 @@ export const createEvent = async (event: EventData) => {
     return addDoc(collection(db, "events"), event)
 }
 
+export const verifyEvent = async (eventId: string) => {
+    const docRef = doc(db, "events", eventId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        const event = docSnap.data() as EventData;
+        event.verified = true;
+
+        setDoc(docRef, event);
+    }
+}
+
 export const participateEvent = async (eventId: string) => {
     const docRef = doc(db, "events", eventId)
     const docSnap = await getDoc(docRef)
@@ -139,6 +151,25 @@ export const spendCoins = async (amount: number) => {
     }
     return null;
 }
+
+export const earnBounty = async (amount: number) => {
+    if (!auth.currentUser) {
+        return new Error("Not logged in");
+    }
+
+    const docRef = doc(db, 'userdetails', auth.currentUser.uid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        const details = docSnap.data() as UserDetails;
+        details.coin += amount;
+        details.xp += amount;
+
+        setDoc(docRef, details)
+    }
+    return null;
+}
+
 
 export const uploadImage = async (file: File) => {
     const imageRef = ref(storage, generateImagePath(file.name));

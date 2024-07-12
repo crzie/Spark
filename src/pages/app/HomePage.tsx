@@ -9,7 +9,7 @@ import icon from "../../assets/icon22.png";
 import xpIcon from "../../assets/XPIcon.png";
 import { useAuth } from "../../hooks/useAuth";
 import { EventData } from "../../models/EventData";
-import { fetchImage, getAllEvents, participateEvent } from "../../services/firebase";
+import { earnBounty, fetchImage, getAccountDetails, getAllEvents, participateEvent, spendCoins } from "../../services/firebase";
 
 const HomePage = () => {
     const { details } = useAuth();
@@ -290,7 +290,7 @@ const HomePage = () => {
 };
 
 const EventDetailCard = ({ doc, refresh }: { doc: FirebaseDocument<EventData>, refresh: () => void }) => {
-    const { user } = useAuth();
+    const { user, setDetails } = useAuth();
     const [imgUrl, setImgUrl] = useState<string[]>([]);
     const event = doc.data;
 
@@ -308,6 +308,20 @@ const EventDetailCard = ({ doc, refresh }: { doc: FirebaseDocument<EventData>, r
         participateEvent(doc.id).then(() => {
             event.participantIds.push(user.uid);
             refresh();
+
+            // simulate a participation verifying process
+            // in the real app we would have the event host count the participants
+
+            setTimeout(() => {
+                message.success("Event participation verified!");
+                earnBounty(event.bounty).then(() => {
+                    message.success(`You have earned ${event.bounty} xp and coins!`);
+
+                    getAccountDetails(user?.uid).then((data) => {
+                        setDetails(data);
+                    });
+                });
+            }, 10000);
         });
     }
 

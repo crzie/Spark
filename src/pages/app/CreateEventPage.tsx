@@ -7,7 +7,7 @@ import { Timestamp } from "firebase/firestore";
 import { useState } from "react";
 import { BsCamera } from "react-icons/bs";
 import { EventData } from "../../models/EventData";
-import { createEvent, uploadImage } from "../../services/firebase";
+import { createEvent, uploadImage, verifyEvent } from "../../services/firebase";
 const { RangePicker } = DatePicker;
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
@@ -92,8 +92,15 @@ const CreateEventPage = () => {
       };
 
       createEvent(eventData)
-        .then(() => {
+        .then((response) => {
           message.success("Event created successfully");
+
+          // it's just to simulate a real-world process
+          // where we would verify the events that are requested
+          setTimeout(() => {
+            verifyEvent(response.id);
+            message.success("Event verified by the admin team");
+          }, 10000);
         })
         .catch((error) => {
           setError(error.message);
