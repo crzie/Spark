@@ -50,13 +50,13 @@ export const getAccountDetails = async (userId: string) => {
 }
 
 export const getAllEvents = async () => {
-    const q = query(collection(db, 'events'), where('verified', '==', true))
-    const result = await getDocs(q)
+    const q = query(collection(db, 'events'), where('verified', '==', true));
+    const result = await getDocs(q);
 
     const events: FirebaseDocument<EventData>[] = [];
     result.forEach((doc) => {
         const data = doc.data();
-        events.push({ data: data as EventData, id: doc.id })
+        events.push({ data: data as EventData, id: doc.id });
     })
 
     return events

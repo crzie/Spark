@@ -2,9 +2,25 @@ import Button from "antd/es/button";
 import coin from "../assets/moving-coin-icon.gif"
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { auth } from "../services/firebase";
+import { signOut } from "firebase/auth";
 const Topbar = () => {
   const navigate = useNavigate();
   const { user, details } = useAuth();
+
+  const handleClick = () => {
+    if (!user) {
+      navigate("/signin");
+    } else {
+      signOut(auth)
+        .then(() => {
+          navigate("/signin");
+        })
+        .catch((error) => {
+          console.error("Error signing out: ", error);
+        });
+    }
+  }
 
   return (
     <div className="w-full overflow-visible">
@@ -20,7 +36,7 @@ const Topbar = () => {
           <div>
             <Button
               className="font-bold text-emerald-800"
-              onClick={() => navigate("/signin")}
+              onClick={handleClick}
             >
               {user ? "Logout" : "Login"}
             </Button>
