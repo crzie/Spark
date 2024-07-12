@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import { Button, Input, InputNumber, Upload, message } from "antd";
 import type { GetProp, UploadFile, UploadProps } from "antd";
+import { Button, DatePicker, Input, InputNumber, Upload, message } from "antd";
 import ImgCrop from "antd-img-crop";
-import Title from "antd/es/typography/Title";
 import TextArea from "antd/es/input/TextArea";
-import { DatePicker } from "antd";
-import { BsCamera } from "react-icons/bs";
-import { createEvent, uploadImage } from "../../services/firebase";
-import { EventData } from "../../models/EventData";
+import Title from "antd/es/typography/Title";
 import { Timestamp } from "firebase/firestore";
+import { useState } from "react";
+import { BsCamera } from "react-icons/bs";
+import { EventData } from "../../models/EventData";
+import { createEvent, uploadImage } from "../../services/firebase";
 const { RangePicker } = DatePicker;
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
@@ -70,27 +69,27 @@ const CreateEventPage = () => {
         return;
       }
 
-            const bannerPath = await uploadImage(banner);
-            const galleryPaths = await Promise.all(fileList.map(async (file) => {
-                return uploadImage(file.originFileObj as FileType);
-            }));
+      const bannerPath = await uploadImage(banner);
+      const galleryPaths = await Promise.all(fileList.map(async (file) => {
+        return uploadImage(file.originFileObj as FileType);
+      }));
 
-            const start: Timestamp = Timestamp.fromDate(eventStart);
-            const end: Timestamp = Timestamp.fromDate(eventEnd);
+      const start: Timestamp = Timestamp.fromDate(eventStart);
+      const end: Timestamp = Timestamp.fromDate(eventEnd);
 
-            const eventData: EventData = {
-                name,
-                description,
-                bannerPath,
-                galleryPaths,
-                bounty,
-                location,
-                eventStart: start,
-                eventEnd: end,
-                verified: false,
-                confirmed: false,
-                participantIds: [],
-            };
+      const eventData: EventData = {
+        name,
+        description,
+        bannerPath,
+        galleryPaths,
+        bounty,
+        location,
+        eventStart: start,
+        eventEnd: end,
+        verified: false,
+        confirmed: false,
+        participantIds: [],
+      };
 
       createEvent(eventData)
         .then(() => {

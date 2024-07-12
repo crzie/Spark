@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import crownIcon from "../../assets/crown-icon.png";
 import rankOneMedal from "../../assets/medal-rank-1.png";
 import rankTwoMedal from "../../assets/medal-rank-2.png";
@@ -6,13 +6,21 @@ import rankThreeMedal from "../../assets/medal-rank-3.png";
 import profileIcon from "../../assets/profile-icon.png";
 import xpIcon from "../../assets/XPIcon.png";
 import levelIcon from "../../assets/levelIcon.png";
-
-type User = {
-  name: string;
-  exp: number;
-};
+import { getAllAccountDetails } from "../../services/firebase";
+import { useAuth } from "../../hooks/useAuth";
 
 const LeaderboardPage = () => {
+  const { details } = useAuth();
+  const [topUsers, setTopUsers] = useState<FirebaseDocument<UserDetails>[]>([]);
+
+  useEffect(() => {
+    getAllAccountDetails().then((data) => {
+      setTopUsers(data);
+    });
+  }, []);
+
+  const sorted = topUsers.sort((a, b) => b.data.xp - a.data.xp);
+
   const initializeProgress = (exp: number) => {
     const baseXp = 5000;
     const levelModifier = 1.2;
@@ -29,28 +37,8 @@ const LeaderboardPage = () => {
     return currentLevel;
   };
 
-  const [topUsers, setTopUsers] = useState<User[]>([
-    {
-      name: "Tyo",
-      exp: 173751,
-    },
-    {
-      name: "Gaving",
-      exp: 125199,
-    },
-    {
-      name: "carni",
-      exp: 115163,
-    },
-    {
-      name: "devis",
-      exp: 109456,
-    },
-  ]);
-
-  const LeaderboardItems = ({ rank, user }: { rank: number; user: User }) => {
-    const isTopThree = rank >= 1 && rank <= 3;
-
+  const LeaderboardItems = ({ rank, user }: { rank: number; user: UserDetails }) => {
+    const name = user === details ? "You" : user.username;
     return (
       <div
         className={
@@ -58,8 +46,8 @@ const LeaderboardPage = () => {
           (rank == 1
             ? " bg-yellow-200 border-2 border-yellow-400"
             : rank == 2
-            ? " bg-gray-300 border-2 border-gray-400"
-            : "")
+              ? " bg-gray-300 border-2 border-gray-400"
+              : "")
         }
       >
         <div className="flex items-center gap-3 w-52">
@@ -78,19 +66,19 @@ const LeaderboardPage = () => {
             </p>
           )}
           <img src={profileIcon} alt="profile" width={48} />
-          <p className="text-lg font-semibold">{user.name}</p>
+          <p className="text-lg font-semibold">{name}</p>
         </div>
         <div className="flex gap-8 w-60">
           <div className="flex items-center gap-2">
             <img src={levelIcon} alt="xp" width={50} />
             <div className="text-emerald-800 font-semibold text-lg">
-              {initializeProgress(user.exp)}
+              {initializeProgress(user.xp)}
             </div>
           </div>
           <div className="flex items-center gap-3">
             <img src={xpIcon} alt="xp" width={40} />
             <div className="text-emerald-800 font-semibold text-lg">
-              {user.exp}
+              {user.xp}
             </div>
           </div>
         </div>
@@ -106,8 +94,8 @@ const LeaderboardPage = () => {
         Top 100 sparkles across the world
       </h4>
       <div className="flex flex-col w-full gap-4 mt-5">
-        {topUsers.map((user, i) => (
-          <LeaderboardItems rank={i + 1} user={user} />
+        {sorted.map((user, i) => (
+          <LeaderboardItems key={user.id} rank={i + 1} user={user.data} />
         ))}
       </div>
       <p className="text-lg">Become the next top sparkle!</p>

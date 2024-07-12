@@ -50,6 +50,19 @@ export const getAccountDetails = async (userId: string) => {
     return null;
 }
 
+export const getAllAccountDetails = async () => {
+    const q = query(collection(db, 'userdetails'));
+    const result = await getDocs(q);
+
+    const details: FirebaseDocument<UserDetails>[] = [];
+    result.forEach((doc) => {
+        const data = doc.data();
+        details.push({ data: data as UserDetails, id: doc.id });
+    })
+
+    return details;
+}
+
 export const getAllEvents = async () => {
     const q = query(collection(db, 'events'), where('verified', '==', true));
     const result = await getDocs(q);
@@ -104,6 +117,23 @@ export const updateProfileImage = async (file: File) => {
     if (docSnap.exists()) {
         const details = docSnap.data() as UserDetails;
         details.imagePath = imagePath;
+
+        setDoc(docRef, details)
+    }
+    return null;
+}
+
+export const spendCoins = async (amount: number) => {
+    if (!auth.currentUser) {
+        return new Error("Not logged in");
+    }
+
+    const docRef = doc(db, 'userdetails', auth.currentUser.uid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists() && docSnap.data()?.coin >= amount) {
+        const details = docSnap.data() as UserDetails;
+        details.coin -= amount;
 
         setDoc(docRef, details)
     }
