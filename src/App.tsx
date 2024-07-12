@@ -1,12 +1,14 @@
 import { Button } from "antd"
 import { Outlet } from "react-router-dom"
+import LeftSidebar from "./components/LeftSidebar"
 
 function App() {
 
   return (
     <>
-      Test
-      <Button>Test AntDesign</Button>
+    <LeftSidebar/>
+      {/* Test
+      <Button>Test AntDesign</Button> */}
       <Outlet />
     </>
   )
