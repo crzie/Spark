@@ -2,6 +2,8 @@
 import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { addDoc, collection, doc, getDoc, getDocs, getFirestore, query, setDoc, where } from "firebase/firestore";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { generateImagePath } from "../helpers/helperFunctions";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -18,6 +20,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const storage = getStorage();
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 
@@ -89,7 +92,27 @@ export const getAllUnverifiedEvents = async () => {
 }
 
 export const updateProfileImage = async (file: File) => {
+    if (!auth.currentUser) {
+        return new Error("Not logged in");
+    }
 
+    const imagePath = await uploadImage(file)
+    const docRef = doc(db, 'userdetails', auth.currentUser.uid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        const details = docSnap.data() as UserDetails;
+        details.imagePath = imagePath;
+
+        setDoc(docRef, details)
+    }
+    return null;
+}
+
+export const uploadImage = async (file: File) => {
+    const imageRef = ref(storage, generateImagePath(file.name));
+    const result = await uploadBytes(imageRef, file)
+    return result.ref.fullPath
 }
 
 
