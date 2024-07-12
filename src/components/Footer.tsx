@@ -1,11 +1,9 @@
-import React from "react";
 import {
-  FaFacebookF,
-  FaInstagram,
-  FaTwitter,
-  FaGoogle,
-  FaYoutube,
   FaDiscord,
+  FaFacebookF,
+  FaGoogle,
+  FaInstagram,
+  FaYoutube
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 const Footer = () => {

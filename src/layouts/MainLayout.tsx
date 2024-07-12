@@ -1,9 +1,8 @@
-import React from "react";
+import { Layout } from "antd";
 import { Outlet } from "react-router-dom";
+import Footer from "../components/Footer";
 import LeftSidebar from "../components/LeftSidebar";
 import Topbar from "../components/Topbar";
-import { Layout } from "antd";
-import Footer from "../components/Footer";
 const { Header, Content, Sider } = Layout;
 const MainLayout = () => {
   return (
