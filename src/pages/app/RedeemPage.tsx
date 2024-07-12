@@ -1,5 +1,7 @@
 import Title from "antd/es/typography/Title";
 import { useAuth } from "../../hooks/useAuth";
+import { getAccountDetails, spendCoins } from "../../services/firebase";
+import { message } from "antd";
 const CharityCard = ({
     name,
     description,
@@ -11,7 +13,18 @@ const CharityCard = ({
     charityStatus,
 }: Charity) => {
 
-    const { user } = useAuth();
+    const { user, setDetails } = useAuth();
+
+    const handleClick = () => {
+        if (charityStatus === "active" && user) {
+            spendCoins(donation).then(() => {
+                message.success(`Donated ${donation} coins to ${name}`);
+                getAccountDetails(user?.uid).then((data) => {
+                    setDetails(data);
+                });
+            });
+        }
+    }
 
     return (
         <div className="max-w-lg mx-auto bg-white rounded-lg shadow-lg border border-gray-200">
@@ -45,6 +58,7 @@ const CharityCard = ({
                                 : "bg-gray-400 text-gray-700"
                                 }`}
                             disabled={charityStatus !== "active" || !user}
+                            onClick={handleClick}
                         >
                             {charityStatus === "active" ? "Redeem" : "Inactive"}
                         </button>

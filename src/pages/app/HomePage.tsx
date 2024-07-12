@@ -1,4 +1,4 @@
-import { Button, Carousel, Input, Progress } from "antd";
+import { Button, Carousel, Input, message, Progress } from "antd";
 import { SearchProps } from "antd/es/input";
 import { useEffect, useRef, useState } from "react";
 import { ContributionCalendar } from "react-contribution-calendar";
@@ -9,7 +9,7 @@ import icon from "../../assets/icon22.png";
 import xpIcon from "../../assets/XPIcon.png";
 import { useAuth } from "../../hooks/useAuth";
 import { EventData } from "../../models/EventData";
-import { fetchImage, getAllEvents } from "../../services/firebase";
+import { fetchImage, getAllEvents, participateEvent } from "../../services/firebase";
 
 const HomePage = () => {
     const { details } = useAuth();
@@ -51,7 +51,7 @@ const HomePage = () => {
         });
         initializeProgress();
     }, []);
-    
+
 
     const data: InputData[] = [
         {
@@ -124,7 +124,7 @@ const HomePage = () => {
             "2024-07-04": { level: 3, data: { myData: "Meeting" } },
         },
     ];
-    
+
 
     if (!details) {
         data.splice(0, data.length);
@@ -162,6 +162,9 @@ const HomePage = () => {
         );
         setFilteredEvents(filtered);
     };
+    const refresh = () => {
+        setAllEvents([...allEvents]);
+    }
     const { Search } = Input;
     return (
         <div className="h-full mb-10">
@@ -278,7 +281,7 @@ const HomePage = () => {
                         </div>
                     </div>
                     {filteredEvents?.map((document) => (
-                        <EventDetailCard key={document.id} event={document.data} />
+                        <EventDetailCard key={document.id} doc={document} refresh={refresh} />
                     ))}
                 </div>
             </div>
@@ -286,9 +289,10 @@ const HomePage = () => {
     );
 };
 
-const EventDetailCard = ({ event }: { event: EventData }) => {
+const EventDetailCard = ({ doc, refresh }: { doc: FirebaseDocument<EventData>, refresh: () => void }) => {
     const { user } = useAuth();
     const [imgUrl, setImgUrl] = useState<string[]>([]);
+    const event = doc.data;
 
     useEffect(() => {
         for (const path of event.galleryPaths) {
@@ -297,6 +301,15 @@ const EventDetailCard = ({ event }: { event: EventData }) => {
             });
         }
     }, []);
+
+    const handleParticipation = () => {
+        if (!user) return;
+        message.success("Participated in the event");
+        participateEvent(doc.id).then(() => {
+            event.participantIds.push(user.uid);
+            refresh();
+        });
+    }
 
     const active = user && !event.participantIds.includes(user.uid);
     const btnClass = "w-28 h-8 mt-2 " + (active ? " bg-emerald-800" : " bg-gray-400 text-gray-700")
@@ -338,6 +351,7 @@ const EventDetailCard = ({ event }: { event: EventData }) => {
                     type="primary"
                     className={btnClass}
                     disabled={!active}
+                    onClick={handleParticipation}
                 >
                     Participate
                 </Button>
