@@ -1,6 +1,6 @@
-import { useState } from "react"
-import { auth, getAccountDetails } from "../services/firebase"
-import { User } from "firebase/auth"
+import { User } from "firebase/auth";
+import { useContext } from "react";
+import { AuthContext } from "../context/Auth";
 
 export type Account = {
     user: User | null;
@@ -8,20 +8,6 @@ export type Account = {
 }
 
 export const useAuth = (): Account => {
-    const [currentUser, setCurrentUser] = useState(auth.currentUser);
-    const [details, setDetails] = useState<UserDetails | null>(null);
-
-    auth.onAuthStateChanged((user) => {
-        if (user) {
-            setCurrentUser(user);
-            getAccountDetails(user?.uid)
-                .then((data) => {
-                    setDetails(data);
-                });
-        }
-    });
-
-
-
-    return { user: currentUser, details };
+    const { user, details } = useContext(AuthContext);
+    return { user, details };
 }

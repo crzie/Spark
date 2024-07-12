@@ -6,6 +6,9 @@ const Topbar = () => {
   const navigate = useNavigate();
   const { user, details } = useAuth();
 
+  console.log(user, details);
+
+
   return (
     <>
       <div className="flex h-20 bg-transparent items-center justify-end w-full lg:gap-7 gap-2 lg:pr-5  pr-1 font-nunito font-bold text-emerald-800">

@@ -7,11 +7,12 @@ import HomePage from "../pages/app/HomePage";
 import LeaderboardPage from "../pages/app/LeaderboardPage";
 import ProfilePage from "../pages/app/ProfilePage";
 import RedeemPage from "../pages/app/RedeemPage";
+import Auth from "../context/Auth";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Auth><App /></Auth>,
     children: [
       { path: "/signin", element: <SignIn /> },
       { path: "/signup", element: <SignUp /> },
