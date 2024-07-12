@@ -2,16 +2,26 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import LeftSidebar from "../components/LeftSidebar";
 import Topbar from "../components/Topbar";
-
+import { Layout } from "antd";
+const { Header, Content, Footer, Sider } = Layout;
 const MainLayout = () => {
   return (
-    <div className="flex w-full">
-      <LeftSidebar />
-      <div className="flex-col grow">
-        <Topbar />
-        <Outlet />
-      </div>
-    </div>
+    <Layout className="bg-transparent">
+      <Sider width={256} className="bg-transparent">
+        <LeftSidebar />
+      </Sider>
+      <Layout>
+        <Header className="bg-emerald-200">
+          <Topbar />
+        </Header>
+        <Content className="bg-emerald-200 h-full">
+       
+            <Outlet />
+         
+        </Content>
+        <Footer style={{ textAlign: 'center' }} className="bg-emerald-200">©2024 Your Company</Footer>
+      </Layout>
+    </Layout>
   );
 };
 
