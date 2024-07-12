@@ -2,8 +2,9 @@
 import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { addDoc, collection, doc, getDoc, getDocs, getFirestore, query, setDoc, where } from "firebase/firestore";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { generateImagePath } from "../helpers/helperFunctions";
+import { EventData } from "../models/EventData";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -115,4 +116,8 @@ export const uploadImage = async (file: File) => {
     return result.ref.fullPath
 }
 
-
+export const fetchImage = async (path: string) => {
+    const imageRef = ref(storage, path);
+    const url = await getDownloadURL(imageRef);
+    return url
+}

@@ -30,7 +30,7 @@ const Topbar = () => {
             <div>
               <img src={coin} alt="" className="w-8 h-8" />
             </div>
-            <div className="text-white">{details?.coin ?? "-"}</div>
+            <div className="text-white">{details?.coin ?? "0"}</div>
           </div>
           <div className="z-20 text-white">Hi, {details?.username ?? "guest"}</div>
           <div>

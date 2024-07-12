@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 type EventData = {
     name: string;
     description: string;
@@ -6,8 +8,8 @@ type EventData = {
     participantIds: string[];
     bounty: number;
     location: string;
-    eventStart: Date;
-    eventEnd: Date;
+    eventStart: Timestamp;
+    eventEnd: Timestamp;
     verified: boolean;
     confirmed: boolean;
 }

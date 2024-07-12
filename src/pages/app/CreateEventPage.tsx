@@ -7,6 +7,8 @@ import TextArea from "antd/es/input/TextArea";
 import { DatePicker } from "antd";
 import { BsCamera } from "react-icons/bs";
 import { createEvent, uploadImage } from "../../services/firebase";
+import { EventData } from "../../models/EventData";
+import { Timestamp } from "firebase/firestore";
 const { RangePicker } = DatePicker;
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
@@ -68,26 +70,27 @@ const CreateEventPage = () => {
         return;
       }
 
-      const bannerPath = await uploadImage(banner);
-      const galleryPaths = await Promise.all(
-        fileList.map(async (file) => {
-          return uploadImage(file.originFileObj as FileType);
-        })
-      );
+            const bannerPath = await uploadImage(banner);
+            const galleryPaths = await Promise.all(fileList.map(async (file) => {
+                return uploadImage(file.originFileObj as FileType);
+            }));
 
-      const eventData: EventData = {
-        name,
-        description,
-        bannerPath,
-        galleryPaths,
-        bounty,
-        location,
-        eventStart,
-        eventEnd,
-        verified: false,
-        confirmed: false,
-        participantIds: [],
-      };
+            const start: Timestamp = Timestamp.fromDate(eventStart);
+            const end: Timestamp = Timestamp.fromDate(eventEnd);
+
+            const eventData: EventData = {
+                name,
+                description,
+                bannerPath,
+                galleryPaths,
+                bounty,
+                location,
+                eventStart: start,
+                eventEnd: end,
+                verified: false,
+                confirmed: false,
+                participantIds: [],
+            };
 
       createEvent(eventData)
         .then(() => {
