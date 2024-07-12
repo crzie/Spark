@@ -43,7 +43,8 @@ const LeftSidebar = () => {
     <>
       <div className="flex flex-col w-24 lg:w-64 gap-4 pl-6 lg:px-6 pt-3 bg-emerald-800 h-screen font-nunito text-md font-extrabold text-emerald-700 overflow-auto">
         <Link to={"/"} className="flex items-center gap-2">
-          <img src={logo} alt="" className="w-12 h-12 mb-3" />
+          <img src={logo} alt="" className="w-12 h-12 mb-3"
+            style={{ filter: "invert(95%) sepia(66%) saturate(3%) hue-rotate(159deg) brightness(117%) contrast(100%)" }} />
           <p className="hidden lg:block text-2xl text-white mb-2">SPARK</p>
         </Link>
         <SidebarItem src={home} text={"HOME"} link="/"></SidebarItem>
