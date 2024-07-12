@@ -62,7 +62,7 @@ export const getAllEvents = async () => {
     return events
 }
 
-export const createEvent = async (event: Event) => {
+export const createEvent = async (event: EventData) => {
     return addDoc(collection(db, "events"), event)
 }
 
