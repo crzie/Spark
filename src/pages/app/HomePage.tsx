@@ -170,7 +170,7 @@ const HomePage = () => {
           <div className="text-black text-xl font-bold mb-3">Experience</div>
           <Progress
             type="dashboard"
-            percent={currExp / requiredExp}
+            percent={currExp / requiredExp * 100}
             strokeColor="#047857"
             format={() => (
               <div className="gap-2 flex flex-col">

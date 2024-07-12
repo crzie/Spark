@@ -166,7 +166,7 @@ const ProfilePage = () => {
               </div>
               <Progress
                 type="dashboard"
-                percent={currExp / requiredExp}
+                percent={currExp / requiredExp * 100}
                 strokeColor="#047857"
                 format={() => <p className="text-emerald-700">{level}</p>}
                 size={[170, 170]}
