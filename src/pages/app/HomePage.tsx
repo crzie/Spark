@@ -9,7 +9,7 @@ import icon from "../../assets/icon22.png";
 import xpIcon from "../../assets/XPIcon.png";
 import { useAuth } from "../../hooks/useAuth";
 import { EventData } from "../../models/EventData";
-import { earnBounty, fetchImage, getAccountDetails, getAllEvents, participateEvent, spendCoins } from "../../services/firebase";
+import { earnBounty, fetchImage, getAccountDetails, getAllEvents, participateEvent } from "../../services/firebase";
 
 const HomePage = () => {
     const { details } = useAuth();
@@ -49,9 +49,11 @@ const HomePage = () => {
             setAllEvents(eventData);
             setFilteredEvents(eventData);
         });
-        initializeProgress();
     }, []);
 
+    useEffect(() => {
+        initializeProgress();
+    }, [details])
 
     const data: InputData[] = [
         {
@@ -156,7 +158,7 @@ const HomePage = () => {
         setRequiredExp(Math.round(currentXpRequirement));
         setLevel(Math.round(currentLevel));
     };
-    const onSearch: SearchProps["onSearch"] = (value, _e, info) => {
+    const onSearch: SearchProps["onSearch"] = (value, _e, _) => {
         const filtered: any = allEvents.filter((event) =>
             event.data.name.toLowerCase().includes(value.toLowerCase())
         );
@@ -229,7 +231,7 @@ const HomePage = () => {
                         cx={15}
                         cy={15}
                         cr={2}
-                        onCellClick={(e, data) => console.log(data)}
+                        onCellClick={(_, data) => console.log(data)}
                         scroll={false}
                         style={{ fontWeight: "normal", fontSize: "small", width: "60vw" }}
                     />
@@ -280,7 +282,7 @@ const HomePage = () => {
                             />
                         </div>
                     </div>
-                    {filteredEvents?.map((document) => (
+                    {filteredEvents?.sort((i, j) => i.data.eventStart.toMillis() - j.data.eventStart.toMillis()).map((document) => (
                         <EventDetailCard key={document.id} doc={document} refresh={refresh} />
                     ))}
                 </div>
