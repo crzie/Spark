@@ -6,7 +6,7 @@ import { Layout } from "antd";
 const { Header, Content, Sider } = Layout;
 const MainLayout = () => {
   return (
-    <Layout className="bg-transparent h-full">
+    <Layout className="bg-transparent h-full" style={{minHeight:'100vh'}}>
       <Sider width={256} className="bg-transparent">
         <LeftSidebar />
       </Sider>
