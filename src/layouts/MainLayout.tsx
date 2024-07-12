@@ -11,10 +11,10 @@ const MainLayout = () => {
         <LeftSidebar />
       </Sider>
       <Layout>
-        <Header className="bg-emerald-200">
+        <Header className="bg-white">
           <Topbar />
         </Header>
-        <Content className="bg-emerald-200 h-full">
+        <Content className="bg-white h-full">
        
             <Outlet />
          

@@ -19,14 +19,14 @@ const LeftSidebar = () => {
   }) => {
     console.log(location.pathname, link);
     const active = location.pathname === link
-      ? " bg-gray-100 border-2 border-emerald-500"
+      ? " border-b-2 border-white"
       : "";
     return (
       <div className="flex gap-3 items-center box-border rounded-lg w-full cursor-pointer ">
         <Link
           to={link}
           className={
-            "hover:bg-gray-100 rounded-lg flex lg:flex-grow items-center " +
+            " flex lg:flex-grow items-center text-white hover:text-white" +
             active
           }
         >
@@ -41,10 +41,10 @@ const LeftSidebar = () => {
 
   return (
     <>
-      <div className="flex flex-col w-24 lg:w-64 gap-4 pl-6 lg:px-6 pt-3 bg-white h-screen font-nunito text-md font-extrabold text-emerald-700 overflow-auto">
+      <div className="flex flex-col w-24 lg:w-64 gap-4 pl-6 lg:px-6 pt-3 bg-emerald-800 h-screen font-nunito text-md font-extrabold text-emerald-700 overflow-auto">
         <Link to={"/"} className="flex items-center gap-2">
           <img src={logo} alt="" className="w-12 h-12 mb-3" />
-          <p className="hidden lg:block text-2xl mb-2">SPARK</p>
+          <p className="hidden lg:block text-2xl text-white mb-2">SPARK</p>
         </Link>
         <SidebarItem src={home} text={"HOME"} link="/"></SidebarItem>
         <SidebarItem
