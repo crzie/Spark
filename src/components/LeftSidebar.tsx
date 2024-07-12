@@ -1,12 +1,10 @@
-import React from "react";
-import logoText from "../assets/SparkLogoTextRight.png";
 import logo from "../assets/SparkLogo.png";
 
+import { Link, useLocation } from "react-router-dom";
+import profile from "../assets/icons8-circled-user-male-skin-type-5-48.png";
 import home from "../assets/icons8-home-48.png";
 import leaderboard from "../assets/icons8-leaderboard-48.png";
 import redeem from "../assets/icons8-redeem-48.png";
-import profile from "../assets/icons8-circled-user-male-skin-type-5-48.png";
-import { Link, useLocation } from "react-router-dom";
 const LeftSidebar = () => {
   const location = useLocation();
 
@@ -24,7 +22,7 @@ const LeftSidebar = () => {
       ? " bg-gray-100 border-2 border-emerald-500"
       : "";
     return (
-      <div className="flex gap-3 items-center rounded-lg w-full cursor-pointer ">
+      <div className="flex gap-3 items-center box-border rounded-lg w-full cursor-pointer ">
         <Link
           to={link}
           className={
