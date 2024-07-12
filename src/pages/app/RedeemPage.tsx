@@ -1,6 +1,4 @@
-import React from "react";
 import Title from "antd/es/typography/Title";
-import unicef from "../../assets/unicefLogo.png";
 const CharityCard = ({
   name,
   description,
@@ -12,7 +10,7 @@ const CharityCard = ({
   charityStatus,
 }: Charity) => {
   return (
-    <div className="max-w-lg mx-auto bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden">
+    <div className="max-w-lg mx-auto bg-white rounded-lg shadow-lg border border-gray-200">
       <div className="flex">
         <div className="bg-emerald-400 p-4 text-white">
           <span className="font-bold text-lg">DONATION</span>
@@ -110,7 +108,7 @@ const RedeemPage = () => {
       <Title level={3} className="text-center">
         My Points: 808008080
       </Title>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mx-32 my-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mx-32 my-10 grow">
         {charityData.map((charity, index) => (
           <CharityCard key={index} {...charity} />
         ))}

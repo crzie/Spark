@@ -6,20 +6,19 @@ import { Layout } from "antd";
 const { Header, Content, Footer, Sider } = Layout;
 const MainLayout = () => {
   return (
-    <Layout className="bg-transparent ">
+    <Layout className="bg-transparent h-full">
       <Sider width={256} className="bg-transparent">
         <LeftSidebar />
       </Sider>
-      <Layout>
+      <Layout className="flex flex-col h-full">
         <Header className="bg-white">
           <Topbar />
         </Header>
-        <Content className="bg-white h-full">
+        <Content className="grow bg-white h-full">
 
           <Outlet />
 
         </Content>
-        <Footer style={{ textAlign: 'center' }} className="bg-emerald-200">©2024 Your Company</Footer>
       </Layout>
     </Layout>
   );
