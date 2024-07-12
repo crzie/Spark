@@ -1,9 +1,18 @@
+import { ConfigProvider } from "antd";
 import { Outlet } from "react-router-dom";
 
 function App() {
   return (
     <div className="w-full flex">
-      <Outlet />
+      <ConfigProvider
+        theme={{
+          token: {
+            /* here is your global tokens */
+          },
+        }}
+      >
+        <Outlet />
+      </ConfigProvider>
     </div>
   );
 }
