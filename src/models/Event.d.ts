@@ -3,6 +3,7 @@ type Event = {
     description: string;
     bannerPath: string;
     galleryPaths: string[];
+    participantIds: string[];
     bounty: number;
     location: string;
     eventStart: Date;

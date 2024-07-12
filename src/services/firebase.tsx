@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { addDoc, collection, doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -43,4 +43,12 @@ export const getAccountDetails = async (userId: string) => {
         return docSnap.data() as UserDetails;
     }
     return null;
+}
+
+export const createEvent = async (event: Event) => {
+
+}
+
+export const participateEvent = async (eventId: string, userId: string) => {
+
 }

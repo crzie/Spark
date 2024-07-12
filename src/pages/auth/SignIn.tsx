@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
-import logo from '../../assets/SparkLogoTextUnder.png'
-import { Typography } from "antd";
-const { Title } = Typography;
-import { Input } from 'antd';
-import { Button } from "antd";
+import { Button, Input, Typography } from "antd";
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../services/firebase';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import logo from '../../assets/SparkLogoTextUnder.png';
+import { auth } from '../../services/firebase';
+const { Title } = Typography;
+
 const SignIn = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");

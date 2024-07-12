@@ -1,11 +1,10 @@
-import { Image } from "antd";
 import { useState } from "react";
-import rankOneMedal from "../../assets/medal-rank-1.png"
-import rankTwoMedal from "../../assets/medal-rank-2.png"
-import rankThreeMedal from "../../assets/medal-rank-3.png"
-import profileIcon from "../../assets/profile-icon.png"
-import xpIcon from "../../assets/XPIcon.png"
-import crownIcon from "../../assets/crown-icon.png"
+import crownIcon from "../../assets/crown-icon.png";
+import rankOneMedal from "../../assets/medal-rank-1.png";
+import rankTwoMedal from "../../assets/medal-rank-2.png";
+import rankThreeMedal from "../../assets/medal-rank-3.png";
+import profileIcon from "../../assets/profile-icon.png";
+import xpIcon from "../../assets/XPIcon.png";
 
 type User = {
   name: string,
