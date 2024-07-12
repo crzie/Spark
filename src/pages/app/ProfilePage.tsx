@@ -1,10 +1,10 @@
-import { Button, Card, Col, Progress, Row } from "antd";
+import { Button, Col, Progress, Row } from "antd";
 import profileIcon from "../../assets/profile-icon.png";
 import { useAuth } from "../../hooks/useAuth";
 import movingCoinIcon from "../../assets/moving-coin-icon.gif";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { IoIosArrowForward, IoIosSearch } from "react-icons/io";
+import {IoIosSearch } from "react-icons/io";
 import bannerImage from "../../assets/bannerimage2.png";
 import xpIcon from "../../assets/XPIcon.png";
 
@@ -73,7 +73,6 @@ const ProfilePage = () => {
 
   const EventCard = ({ event }: { event: EventData }) => {
     const startDate = event.eventStart;
-    const endDate = event.eventEnd;
 
     return (
       <div className="flex w-full bg-white shadow-md h-52 rounded-lg">
@@ -168,7 +167,7 @@ const ProfilePage = () => {
             Participated Events
           </p>
           {events.map((event) => (
-            <EventCard event={events[0]} />
+            <EventCard event={event} />
           ))}
         </div>
       </div>

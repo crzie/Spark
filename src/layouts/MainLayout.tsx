@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import LeftSidebar from "../components/LeftSidebar";
 import Topbar from "../components/Topbar";
 import { Layout } from "antd";
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 const MainLayout = () => {
   return (
     <Layout className="bg-transparent h-full">
