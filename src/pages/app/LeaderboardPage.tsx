@@ -5,6 +5,7 @@ import rankTwoMedal from "../../assets/medal-rank-2.png";
 import rankThreeMedal from "../../assets/medal-rank-3.png";
 import profileIcon from "../../assets/profile-icon.png";
 import xpIcon from "../../assets/XPIcon.png";
+import levelIcon from "../../assets/levelIcon.png";
 
 type User = {
   name: string;
@@ -12,22 +13,38 @@ type User = {
 };
 
 const LeaderboardPage = () => {
+  const initializeProgress = (exp: number) => {
+    const baseXp = 5000;
+    const levelModifier = 1.2;
+
+    let currentXpRequirement = baseXp;
+    let currentUserXp = exp ?? 0;
+    let currentLevel = 1;
+
+    while (currentUserXp > currentXpRequirement) {
+      currentLevel += 1;
+      currentUserXp -= currentXpRequirement;
+      currentXpRequirement *= levelModifier;
+    }
+    return currentLevel;
+  };
+
   const [topUsers, setTopUsers] = useState<User[]>([
     {
       name: "Tyo",
-      exp: 10000,
+      exp: 173751,
     },
     {
       name: "Gaving",
-      exp: 9999,
+      exp: 125199,
     },
     {
       name: "carni",
-      exp: 9000,
+      exp: 115163,
     },
     {
       name: "devis",
-      exp: 2999,
+      exp: 109456,
     },
   ]);
 
@@ -45,7 +62,7 @@ const LeaderboardPage = () => {
             : "")
         }
       >
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 w-52">
           {rank == 1 ? (
             <img src={rankOneMedal} width={50} alt="medal" />
           ) : rank == 2 ? (
@@ -63,10 +80,18 @@ const LeaderboardPage = () => {
           <img src={profileIcon} alt="profile" width={48} />
           <p className="text-lg font-semibold">{user.name}</p>
         </div>
-        <div className="flex items-center gap-3">
-          <img src={xpIcon} alt="xp" width={40} />
-          <div className="text-emerald-800 font-semibold text-lg">
-            {user.exp}
+        <div className="flex gap-8 w-60">
+          <div className="flex items-center gap-2">
+            <img src={levelIcon} alt="xp" width={50} />
+            <div className="text-emerald-800 font-semibold text-lg">
+              {initializeProgress(user.exp)}
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <img src={xpIcon} alt="xp" width={40} />
+            <div className="text-emerald-800 font-semibold text-lg">
+              {user.exp}
+            </div>
           </div>
         </div>
       </div>

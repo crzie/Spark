@@ -203,7 +203,7 @@ const EventDetailCard = ({ event }: { event: EventData }) => {
 
   const dateConverter = (date: number): string => {
     console.log(date);
-    return new Date(Math.ceil(date.seconds)).toDateString();
+    return new Date(Math.ceil(date)).toDateString();
   };
 
   return (
