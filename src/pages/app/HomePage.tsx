@@ -49,6 +49,7 @@ const HomePage = () => {
             setAllEvents(eventData);
             setFilteredEvents(eventData);
         });
+        initializeProgress();
     }, []);
 
     const data: InputData[] = [
@@ -70,10 +71,6 @@ const HomePage = () => {
     const formatDate = (date: Date) => date.toISOString().split("T")[0];
     const startDate = formatDate(oneYearAgo);
     const endDate = formatDate(currentDate);
-
-    useEffect(() => {
-        initializeProgress();
-    }, []);
 
     // xp: 10000 + 120% * 10000 * level
     const initializeProgress = () => {
@@ -225,6 +222,7 @@ const HomePage = () => {
 };
 
 const EventDetailCard = ({ event }: { event: EventData }) => {
+    const { user } = useAuth();
     const [imgUrl, setImgUrl] = useState<string[]>([]);
 
     useEffect(() => {
@@ -234,6 +232,9 @@ const EventDetailCard = ({ event }: { event: EventData }) => {
             });
         }
     }, []);
+
+    const active = user && !event.participantIds.includes(user.uid);
+    const btnClass = "w-28 h-8 mt-2 " + (active ? " bg-emerald-800" : " bg-gray-400 text-gray-700")
 
     return (
         <div className="ml-16 mr-16 my-10 gap-10 flex justify-between">
@@ -270,8 +271,8 @@ const EventDetailCard = ({ event }: { event: EventData }) => {
                 </p>
                 <Button
                     type="primary"
-                    className="w-28 h-8 mt-2"
-                    style={{ backgroundColor: "#0B6A3C" }}
+                    className={btnClass}
+                    disabled={!active}
                 >
                     Participate
                 </Button>

@@ -6,7 +6,7 @@ import rankThreeMedal from "../../assets/medal-rank-3.png";
 import profileIcon from "../../assets/profile-icon.png";
 import xpIcon from "../../assets/XPIcon.png";
 import levelIcon from "../../assets/levelIcon.png";
-import { getAllAccountDetails } from "../../services/firebase";
+import { fetchImage, getAllAccountDetails } from "../../services/firebase";
 import { useAuth } from "../../hooks/useAuth";
 
 const LeaderboardPage = () => {
@@ -39,6 +39,16 @@ const LeaderboardPage = () => {
 
   const LeaderboardItems = ({ rank, user }: { rank: number; user: UserDetails }) => {
     const name = user === details ? "You" : user.username;
+    const [image, setImage] = useState<string>("");
+
+    useEffect(() => {
+      fetchImage(user.imagePath).then((url) => {
+        setImage(url);
+      });
+    }, [user.imagePath]);
+
+    const img = !image ? profileIcon : image;
+
     return (
       <div
         className={
@@ -65,7 +75,7 @@ const LeaderboardPage = () => {
               {rank}
             </p>
           )}
-          <img src={profileIcon} alt="profile" width={48} />
+          <img src={img} alt="profile" className="rounded-full" width={48} height={48} />
           <p className="text-lg font-semibold">{name}</p>
         </div>
         <div className="flex gap-8 w-60">

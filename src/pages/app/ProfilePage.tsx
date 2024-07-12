@@ -1,53 +1,51 @@
-import { Button, Col, Progress, Row } from "antd";
-import profileIcon from "../../assets/profile-icon.png";
-import { useAuth } from "../../hooks/useAuth";
-import movingCoinIcon from "../../assets/moving-coin-icon.gif";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { IoIosSearch } from "react-icons/io";
-import bannerImage from "../../assets/bannerimage2.png";
-import xpIcon from "../../assets/XPIcon.png";
-import { EventData } from "../../models/EventData";
+import { Col, Progress, Row } from "antd";
 import { Timestamp } from "firebase/firestore";
+import { useEffect, useState } from "react";
 import { BsCamera } from "react-icons/bs";
+import bannerImage from "../../assets/bannerimage2.png";
+import movingCoinIcon from "../../assets/moving-coin-icon.gif";
+import xpIcon from "../../assets/XPIcon.png";
+import { useAuth } from "../../hooks/useAuth";
+import { EventData } from "../../models/EventData";
+import { fetchImage, updateProfileImage } from "../../services/firebase";
+import accountIcon from "../../assets/profile-icon.png";
 
 const ProfilePage = () => {
-  const { user, details } = useAuth();
-  const [currExp, setCurrExp] = useState(0);
-  const [requiredExp, setRequiredExp] = useState(0);
-  const [level, setLevel] = useState(0);
-  const [showEditPrompt, setShowEditPrompt] = useState(false)
+    const { user, details } = useAuth();
+    const [currExp, setCurrExp] = useState(0);
+    const [requiredExp, setRequiredExp] = useState(0);
+    const [level, setLevel] = useState(0);
 
-  const [events, setEvents] = useState<EventData[]>([
-      {
-          bannerPath: "",
-          bounty: 100000,
-          confirmed: true,
-          description:
-              'Central Park hosted "Green Earth Day," bringing together thousands of volunteers for environmental conservation. Activities included tree planting, educational workshops, and a park cleanup. The event aimed to raise awareness about climate change and promote eco-friendly practices, emphasizing community efforts to protect the planet.',
-          eventEnd: Timestamp.now(),
-          eventStart: Timestamp.now(),
-          galleryPaths: [],
-          location: "Central Park",
-          name: "Green Earth Day",
-          participantIds: [],
-          verified: true,
-      },
-      {
-          bannerPath: "",
-          bounty: 100000,
-          confirmed: true,
-          description:
-              'Central Park hosted "Green Earth Day," bringing together thousands of volunteers for environmental conservation. Activities included tree planting, educational workshops, and a park cleanup. The event aimed to raise awareness about climate change and promote eco-friendly practices, emphasizing community efforts to protect the planet.',
-          eventEnd: Timestamp.now(),
-          eventStart: Timestamp.now(),
-          galleryPaths: [],
-          location: "Central Park",
-          name: "Green Earth Day",
-          participantIds: [],
-          verified: true,
-      },
-  ]);
+    const [events] = useState<EventData[]>([
+        {
+            bannerPath: "",
+            bounty: 100000,
+            confirmed: true,
+            description:
+                'Central Park hosted "Green Earth Day," bringing together thousands of volunteers for environmental conservation. Activities included tree planting, educational workshops, and a park cleanup. The event aimed to raise awareness about climate change and promote eco-friendly practices, emphasizing community efforts to protect the planet.',
+            eventEnd: Timestamp.now(),
+            eventStart: Timestamp.now(),
+            galleryPaths: [],
+            location: "Central Park",
+            name: "Green Earth Day",
+            participantIds: [],
+            verified: true,
+        },
+        {
+            bannerPath: "",
+            bounty: 100000,
+            confirmed: true,
+            description:
+                'Central Park hosted "Green Earth Day," bringing together thousands of volunteers for environmental conservation. Activities included tree planting, educational workshops, and a park cleanup. The event aimed to raise awareness about climate change and promote eco-friendly practices, emphasizing community efforts to protect the planet.',
+            eventEnd: Timestamp.now(),
+            eventStart: Timestamp.now(),
+            galleryPaths: [],
+            location: "Central Park",
+            name: "Green Earth Day",
+            participantIds: [],
+            verified: true,
+        },
+    ]);
 
     useEffect(() => {
         initializeProgress();
@@ -72,8 +70,6 @@ const ProfilePage = () => {
         setRequiredExp(Math.round(currentXpRequirement));
         setLevel(currentLevel);
     };
-
-    const updateProfileImage = async (file: File) => { };
 
     const EventCard = ({ event }: { event: EventData }) => {
         const startDate = event.eventStart.toDate();
@@ -112,27 +108,17 @@ const ProfilePage = () => {
     };
 
 
-  return (
-    <div className="px-16 py-4">
-      <div className="flex justify-between mx-24">
-        <div className="flex items-center gap-5 mb-4">
-          <label
-            className={`flex flex-col justify-center items-center w-40 h-40 bg-center bg-cover bg-[url('/src/assets/profile-icon.png')] cursor-pointer`}
-            onMouseEnter={() => { setShowEditPrompt(true) }}
-            onMouseLeave={() => { setShowEditPrompt(false) }}
-          >
-            <div className={`${showEditPrompt? "flex" : "hidden"} flex-col justify-center items-center w-10/12 h-5/6 rounded-full bg-black bg-opacity-20 select-none`}>
-              <BsCamera className="w-14 h-14" />
-              <p className="font-semibold text-sm">Change Photo</p>
-              <input type="file" hidden placeholder="image"/>
-            </div>
-          </label>
-          <div className="flex flex-col gap-3">
-            <p className="font-semibold text-4xl">{details?.username}</p>
-            <p className="text-emerald-700 text-xl">{user?.email}</p>
-          </div>
-        </div>
-        {/* <Link to="/edit-profile">
+    return (
+        <div className="px-16 py-4">
+            <div className="flex justify-between mx-24">
+                <div className="flex items-center gap-5 mb-4">
+                    <ProfileIcon />
+                    <div className="flex flex-col gap-3">
+                        <p className="font-semibold text-4xl">{details?.username ?? "Guest"}</p>
+                        <p className="text-emerald-700 text-xl">{user?.email ?? ""}</p>
+                    </div>
+                </div>
+                {/* <Link to="/edit-profile">
           <Button
             type="primary"
             className="self-start mt-5 mr-10 bg-emerald-800 font-semibold"
@@ -147,47 +133,81 @@ const ProfilePage = () => {
             Edit
           </Button>
         </Link> */}
-      </div>
-      <div className="mx-24">
-        <Row gutter={[60, 60]} className="mt-6">
-          <Col span={12}>
-            <div className="flex flex-col items-center justify-center w-full bg-emerald-50 rounded-2xl shadow gap-4 select-none h-80">
-              <p className="text-yellow-400 text-xl font-bold">Coins</p>
-              <img src={movingCoinIcon} alt="coin" width={160} />
-              <p className="text-yellow-400 text-xl font-bold">
-                {details?.coin}
-              </p>
             </div>
-          </Col>
-          <Col span={12}>
-            <div className="flex flex-col items-center justify-center w-full bg-emerald-50 rounded-2xl shadow gap-2 select-none h-80">
-              <div className="text-emerald-700 text-xl font-bold mb-3">
-                Experience
-              </div>
-              <Progress
-                type="dashboard"
-                percent={currExp / requiredExp * 100}
-                strokeColor="#047857"
-                format={() => <p className="text-emerald-700">{level}</p>}
-                size={[170, 170]}
-              />
-              <div className="text-emerald-700 text-xl font-semibold">
-                {currExp} / {requiredExp}  XP
-              </div>
+            <div className="mx-24">
+                <Row gutter={[60, 60]} className="mt-6">
+                    <Col span={12}>
+                        <div className="flex flex-col items-center justify-center w-full bg-emerald-50 rounded-2xl shadow gap-4 select-none h-80">
+                            <p className="text-yellow-400 text-xl font-bold">Coins</p>
+                            <img src={movingCoinIcon} alt="coin" width={160} />
+                            <p className="text-yellow-400 text-xl font-bold">
+                                {details?.coin}
+                            </p>
+                        </div>
+                    </Col>
+                    <Col span={12}>
+                        <div className="flex flex-col items-center justify-center w-full bg-emerald-50 rounded-2xl shadow gap-2 select-none h-80">
+                            <div className="text-emerald-700 text-xl font-bold mb-3">
+                                Experience
+                            </div>
+                            <Progress
+                                type="dashboard"
+                                percent={currExp / requiredExp * 100}
+                                strokeColor="#047857"
+                                format={() => <p className="text-emerald-700">{level}</p>}
+                                size={[170, 170]}
+                            />
+                            <div className="text-emerald-700 text-xl font-semibold">
+                                {currExp} / {requiredExp}  XP
+                            </div>
+                        </div>
+                    </Col>
+                </Row>
+                <div className="flex flex-col items-center w-full bg-emerald-50 rounded-2xl shadow gap-4 p-6 my-8">
+                    <p className="text-gray-500 text-xl self-start font-semibold">
+                        Participated Events
+                    </p>
+                    {user && events.map((event) => (
+                        <EventCard event={event} />
+                    ))}
+                    {!user && <h1 className="text-2xl">Sign in to access this feature</h1>}
+                </div>
             </div>
-          </Col>
-        </Row>
-        <div className="flex flex-col items-center w-full bg-emerald-50 rounded-2xl shadow gap-4 p-6 my-8">
-          <p className="text-gray-500 text-xl self-start font-semibold">
-            Participated Events
-          </p>
-          {events.map((event) => (
-            <EventCard event={event} />
-          ))}
         </div>
-      </div>
-    </div>
-  );
+    );
 };
+
+const ProfileIcon = () => {
+    const { details } = useAuth();
+    const [showEditPrompt, setShowEditPrompt] = useState(false);
+    const [image, setImage] = useState<string>("");
+
+    useEffect(() => {
+        fetchImage(details?.imagePath ?? "").then((url) => {
+            setImage(url);
+        });
+    }, [])
+
+    const img = !image ? accountIcon : image;
+    return (
+        <label
+            className={`flex flex-col relative justify-center items-center w-40 h-40 bg-center bg-cover cursor-pointer`}
+            onMouseEnter={() => { setShowEditPrompt(true) }}
+            onMouseLeave={() => { setShowEditPrompt(false) }}
+        >
+            <img src={img} alt="profile" className="w-40 h-40 rounded-full" />
+            <div className={`${showEditPrompt ? "absolute flex" : "hidden"} flex-col justify-center items-center w-full h-full rounded-full bg-black bg-opacity-20 select-none`}>
+                <BsCamera className="w-14 h-14" />
+                <p className="font-semibold text-sm">Change Photo</p>
+                <input type="file" hidden placeholder="image" onChange={
+                    (e) => {
+                        if (e.target.files) {
+                            updateProfileImage(e.target.files[0]);
+                        }
+                    }} />
+            </div>
+        </label>
+    )
+}
 
 export default ProfilePage;
