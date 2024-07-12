@@ -1,33 +1,72 @@
-import React from 'react'
-import logoText from "../assets/SparkLogoTextRight.png"
-import home from "../assets/icons8-home-48.png"
-import leaderboard from "../assets/icons8-leaderboard-48.png"
-import redeem from "../assets/icons8-redeem-48.png"
-import profile from "../assets/icons8-circled-user-male-skin-type-5-48.png"
+import React from "react";
+import logoText from "../assets/SparkLogoTextRight.png";
+import logo from "../assets/SparkLogo.png";
+
+import home from "../assets/icons8-home-48.png";
+import leaderboard from "../assets/icons8-leaderboard-48.png";
+import redeem from "../assets/icons8-redeem-48.png";
+import profile from "../assets/icons8-circled-user-male-skin-type-5-48.png";
+import { Link, useLocation } from "react-router-dom";
 const LeftSidebar = () => {
+  const location = useLocation();
+
+  const SidebarItem = ({
+    src,
+    text,
+    link,
+  }: {
+    src: string;
+    text: string;
+    link: string;
+  }) => {
+    console.log(location.pathname, link);
+    const active = location.pathname.startsWith(link)
+      ? " bg-gray-100 border-2 border-emerald-500"
+      : "";
+    return (
+      <div className="flex gap-3 items-center rounded-lg w-full cursor-pointer ">
+        <Link
+          to={link}
+          className={
+            "hover:bg-gray-100 rounded-lg flex lg:flex-grow items-center " +
+            active
+          }
+        >
+          <div className="m-1">
+            <img src={src} alt="" className="w-10 h-10" />
+          </div>
+          <p className="hidden lg:block ml-2">{text}</p>
+        </Link>
+      </div>
+    );
+  };
+
   return (
     <>
-      <div className='flex flex-col w-1/6 gap-4 pl-6 pt-3 bg-white h-screen font-nunito text-md font-extrabold text-emerald-700'>
-        <div><img src={logoText} alt="" className='w-40 h-20 mb-3'/></div>
-        <div className='flex gap-3 items-center hover:bg-gray-100 rounded-md py-2 w-11/12 cursor-pointer'>
-          <div className=' px-2'><img src={home} alt="" className="w-10 h-10"/></div>  
-          <div>HOME</div>
-        </div>
-        <div className='flex gap-3 items-center hover:bg-gray-100 rounded-md py-2 w-11/12 cursor-pointer'>
-          <div className=' px-2'><img src={leaderboard} alt="" className="w-10 h-10"/></div>
-          <div>LEADERBOARD</div>
-        </div>
-        <div className='flex gap-3 items-center hover:bg-gray-100 rounded-md py-2 w-11/12 cursor-pointer'>
-          <div className=' px-2'><img src={redeem} alt="" className="w-10 h-10"/></div>
-          <div>REDEEM</div>
-        </div>
-        <div className='flex gap-3 items-center hover:bg-gray-100 rounded-md py-2 w-11/12 cursor-pointer'>
-          <div className=' px-2'><img src={profile} alt="" className="w-10 h-10"/></div>
-          <div>PROFILE</div>
-        </div>
+      <div className="flex flex-col w-24 lg:w-64 gap-4 pl-6 lg:px-6 pt-3 bg-white h-screen font-nunito text-md font-extrabold text-emerald-700 fixed overflow-auto">
+        <Link to={"/"} className="flex items-center gap-2">
+          <img src={logo} alt="" className="w-12 h-12 mb-3" />
+          <p className="hidden lg:block text-2xl mb-2">SPARK</p>
+        </Link>
+        <SidebarItem src={home} text={"HOME"} link="/"></SidebarItem>
+        <SidebarItem
+          src={leaderboard}
+          text={"LEADERBOARD"}
+          link="/leaderboard"
+        ></SidebarItem>
+        <SidebarItem
+          src={redeem}
+          text={"REDEEM"}
+          link="/redeem"
+        ></SidebarItem>
+        <SidebarItem
+          src={profile}
+          text={"PROFILE"}
+          link="/profile"
+        ></SidebarItem>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default LeftSidebar
+export default LeftSidebar;
